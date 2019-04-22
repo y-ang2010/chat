@@ -51,6 +51,7 @@ import (
 	"google.golang.org/grpc"
 
 	// File upload handlers
+	_ "github.com/tinode/chat/server/media/bos"
 	_ "github.com/tinode/chat/server/media/fs"
 	_ "github.com/tinode/chat/server/media/s3"
 )
