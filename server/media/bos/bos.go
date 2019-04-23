@@ -117,7 +117,8 @@ func (bh *bosHandler) Init(jsconf string) error {
 
 // Redirect is used when one wants to serve files from a different external server.
 func (bh *bosHandler) Redirect(upload bool, url string) (string, error) {
-	return "", types.ErrUnsupported
+	//return "", types.ErrUnsupported
+	return "", nil
 }
 
 // Upload processes request for a file upload. The file is given as io.Reader.
@@ -166,8 +167,6 @@ func (bh *bosHandler) Upload(fdef *types.FileDef, file io.ReadSeeker) (string, e
 	log.Println("bos upload success ", fname, "key", key, "id", fdef.Id)
 
 	return bh.conf.ServeURL + fname, nil
-
-	return "", nil
 }
 
 // Download processes request for file download.
