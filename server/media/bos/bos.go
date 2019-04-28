@@ -125,8 +125,15 @@ func (bh *bosHandler) Redirect(upload bool, url string) (string, error) {
 func (bh *bosHandler) Upload(fdef *types.FileDef, file io.ReadSeeker) (string, error) {
 	var err error
 
-	key := fdef.Uid().String32()
-	fdef.Location = key
+	fname := fdef.Id
+	ext, _ := mime.ExtensionsByType(fdef.MimeType)
+	if len(ext) > 0 {
+		fname += ext[0]
+	}
+
+	//key := fdef.Uid().String32()
+	key := fname
+	fdef.Location = fname
 
 	// load file to temp-file
 	tempFile, err := ioutil.TempFile("", "tionde_tmp")
@@ -156,12 +163,6 @@ func (bh *bosHandler) Upload(fdef *types.FileDef, file io.ReadSeeker) (string, e
 	if err != nil {
 		bh.svc.DeleteObject(bh.conf.BucketName, key)
 		return "", err
-	}
-
-	fname := fdef.Id
-	ext, _ := mime.ExtensionsByType(fdef.MimeType)
-	if len(ext) > 0 {
-		fname += ext[0]
 	}
 
 	log.Println("bos upload success ", fname, "key", key, "id", fdef.Id)
