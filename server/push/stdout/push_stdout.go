@@ -55,7 +55,7 @@ func (stdoutPush) Init(jsonconf string) error {
 		for {
 			select {
 			case msg := <-handler.input:
-				fmt.Fprintln(os.Stdout, msg)
+				fmt.Fprintln(os.Stdout, fmt.Sprintf("%+v",msg))
 			case <-handler.stop:
 				return
 			}
